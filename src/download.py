@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 key = args.key
 secret = args.secret
-wait_time = 1
+wait_time = 0.5
 
 animalname = args.name
 savedir = "../images/" + animalname
@@ -29,4 +29,14 @@ result = flickr.photos.search(
 )
 
 photos = result['photos']
-pprint(photos)
+# 確認用
+#pprint(photos)
+
+for i, photo in enumerate(photos['photo']):
+    url_q = photo['url_q']
+    filepath = savedir + '/' + photo['id'] + '.jpg'
+    if os.path.exists(filepath): continue
+    urlretrieve(url_q, filepath)
+    time.sleep(wait_time)
+    if i%10 == 0:
+        print('downloaded {0} images.'.format(i))
