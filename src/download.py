@@ -6,9 +6,9 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='Download images by using FlickrAPI.')
-parser.add_argument('-k', '--key', default=None, required=True)
-parser.add_argument('-s', '--secret', default=None, required=True)
-parser.add_argument('-n', '--name', default=None, required=True, help='monkey/crow/boar')
+parser.add_argument('-k', '--key', required=True)
+parser.add_argument('-s', '--secret', required=True)
+parser.add_argument('-n', '--name', required=True, help='monkey/crow/boar')
 args = parser.parse_args()
 
 key = args.key
