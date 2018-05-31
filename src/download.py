@@ -6,31 +6,32 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='Download images by using FlickrAPI.')
-parser.add_argument('-k', '--key', default=None, required=True, help='Input your FlickrAPI KEY')
-parser.add_argument('-s', '--secret', default=None, required=True, help='Input your FlickrAPI SECRET')
-parser.add_argument('-n', '--name', default=None, required=True, help='Input the animalname you will download (monkey / boar / crow)')
+parser.add_argument('-k', '--key', default=None, required=True)
+parser.add_argument('-s', '--secret', default=None, required=True)
+parser.add_argument('-n', '--name', default=None, required=True, help='monkey/crow/boar')
 args = parser.parse_args()
 
 key = args.key
 secret = args.secret
 wait_time = 0.5
 
-animalname = args.name
-savedir = "../images/" + animalname
+animal_name = args.name
+save_dir = "../images/" + animal_name
 
 flickr = FlickrAPI(key, secret, format='parsed-json')
 result = flickr.photos.search(
-    text = animalname,
-    per_page = 400,
-    media = 'photos', #画像を検索する
-    sort = 'relevance', #関連度順にソートする
-    safe_search = 1, #UIコンテンツは表示しない（アイコン、ボタンなど）
-    extras = 'url_q, licence'
+    text=animal_name,
+    per_page=400,
+    media='photos',  # 画像を検索する
+    sort='relevance',  # 関連度順にソートする
+    safe_search=1,  # UIコンテンツは表示しない（アイコン、ボタンなど）
+    extras='url_q, licence'
 )
 
 photos = result['photos']
 # 確認用
-#pprint(photos)
+pprint(photos)
+
 
 for i, photo in enumerate(photos['photo']):
     url_q = photo['url_q']
