@@ -15,31 +15,31 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('file is not in')
+            flash('ファイルがありません')
             return redirect(request.url)
         file = request.files['file']
         if file.filename == '':
-            flash('file is not in')
+            flash('ファイルがありません')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
-        return '''
-        <!doctype html>
-        <html>
-        <head>
-        <meta charset="UTF-8">
-        <title>FILE UPLOAD</title></head>
-        <body>
-        <h1>YOU CAN UPLOAD A FILE!</h1>
-        <form method = post enctype = multipart/form-data>
-        <input type=file name=file>
-        <input type=submit value=Upload>
-        </form>
-        </body>
-        </html>
-        '''
+    return '''
+    <!doctype html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>ファイルをアップロードして判定しよう</title></head>
+    <body>
+    <h1>ファイルをアップロードして判定しよう！</h1>
+    <form method = post enctype = multipart/form-data>
+    <p><input type=file name=file>
+    <input type=submit value=Upload>
+    </form>
+    </body>
+    </html>
+    '''
 
 from flask import send_from_directory
 
